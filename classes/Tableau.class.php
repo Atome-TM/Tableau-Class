@@ -1,11 +1,13 @@
 <?php
+class TableauException extends Exception{}
+
 class Tableau implements IteratorAggregate, ArrayAccess {
 
 	private $items;
 
 	public function __construct(array $items) {
 		if(!is_array($items)) {
-			return false;
+			throw new TableauException("Vous devez renseigner un tableau");
 		}
 
 		$this->items = $items;
@@ -13,7 +15,7 @@ class Tableau implements IteratorAggregate, ArrayAccess {
 
 	public function get($key) {
 		if(!$this->has($key)) {
-			return false;
+			throw new TableauException("Impossible de trouver '". $key ."' dans le tableau.");
 		}
 
 		if(is_array($this->items[$key])) {
